@@ -28,6 +28,11 @@
       "name": "ux-design",
       "path": ".agent/skills/ux-design",
       "description": "UX design specification generator that transforms a PRD into a UX_DESIGN.md using a 6-pass forced designer mindset approach"
+    },
+    {
+      "name": "ux-redesign",
+      "path": ".agent/skills/ux-redesign",
+      "description": "UX redesign skill that audits an existing codebase against its UX spec and PRD, produces an audit report, then rewrites UX_DESIGN.md with improvements"
     }
   ]
 }

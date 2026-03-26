@@ -18,11 +18,12 @@ This repository provides three categories of agent skills:
 2. **Audit** using static analysis + axe-core runtime testing following WCAG-EM methodology
 3. **Review** the structured Markdown conformance report organized by WCAG level and POUR principles
 
-**UX Design Skills** — PRD-to-UX-design workflow:
+**UX Design Skills** — PRD-to-UX-design and codebase-to-redesign workflows:
 
-1. **Provide** a PRD (`docs/PRD.md`) and optional feature catalog (`docs/FEATURES.md`)
+1. **Provide** a PRD (`docs/PRD.md`) and feature catalog (`docs/FEATURES.md`)
 2. **Analyze** through 6 forced designer mindset passes covering mental models, IA, affordances, cognitive load, states, and flow integrity
 3. **Review** the assembled `docs/UX_DESIGN.md` with UX foundations and ASCII wireframes
+4. **Redesign** by auditing the codebase against the UX spec, producing an audit report, then rewriting `docs/UX_DESIGN.md` with improvements
 
 All design skills share a common [token schema](#token-schema), so the extractor's output plugs directly into either applier.
 
@@ -47,6 +48,7 @@ All design skills share a common [token schema](#token-schema), so the extractor
 | Skill | Description |
 |-------|-------------|
 | **ux-design** | UX design specification generator that transforms a PRD (`docs/PRD.md`) and optional feature catalog (`docs/FEATURES.md`) into `docs/UX_DESIGN.md` using 6 forced designer mindset passes — mental models, IA, affordances, cognitive load, state design, and flow integrity — followed by visual specifications with ASCII wireframes. |
+| **ux-redesign** | Audits an existing codebase against its UX spec (`docs/UX_DESIGN.md`) and PRD, produces a comprehensive audit report at `docs/reports/UX_DESIGN_REPORT.md`, then rewrites `docs/UX_DESIGN.md` with layout improvements using 6 redesign-adapted passes. Requires `docs/PRD.md`, `docs/FEATURES.md`, and `docs/UX_DESIGN.md` to already exist. |
 
 ## Installation
 
@@ -67,6 +69,7 @@ $skill-installer install https://github.com/savourylie/ui-design-skills/tree/mai
 $skill-installer install https://github.com/savourylie/ui-design-skills/tree/main/skills/design-system-mobile-applier
 $skill-installer install https://github.com/savourylie/ui-design-skills/tree/main/skills/wcag-accessibility-checker
 $skill-installer install https://github.com/savourylie/ui-design-skills/tree/main/skills/ux-design
+$skill-installer install https://github.com/savourylie/ui-design-skills/tree/main/skills/ux-redesign
 ```
 
 Restart Codex after installing to pick up the new skills.
@@ -88,7 +91,7 @@ Install skills directly from GitHub (no cloning required):
 curl -sL https://github.com/savourylie/ui-design-skills/archive/refs/heads/main.tar.gz \
   | tar xz --strip-components=1 -C /tmp ui-design-skills-main/skills
 mkdir -p .agent/skills
-for s in design-system-extractor design-system-web-applier design-system-mobile-applier wcag-accessibility-checker ux-design; do
+for s in design-system-extractor design-system-web-applier design-system-mobile-applier wcag-accessibility-checker ux-design ux-redesign; do
   cp -r /tmp/skills/$s .agent/skills/
 done
 rm -rf /tmp/skills
@@ -100,7 +103,7 @@ Or for global installation (available across all projects):
 curl -sL https://github.com/savourylie/ui-design-skills/archive/refs/heads/main.tar.gz \
   | tar xz --strip-components=1 -C /tmp ui-design-skills-main/skills
 mkdir -p ~/.gemini/antigravity/skills
-for s in design-system-extractor design-system-web-applier design-system-mobile-applier wcag-accessibility-checker ux-design; do
+for s in design-system-extractor design-system-web-applier design-system-mobile-applier wcag-accessibility-checker ux-design ux-redesign; do
   cp -r /tmp/skills/$s ~/.gemini/antigravity/skills/
 done
 rm -rf /tmp/skills
@@ -174,14 +177,16 @@ ui-design-skills/
 │       ├── design-system-web-applier    -> ../../skills/design-system-web-applier
 │       ├── design-system-mobile-applier -> ../../skills/design-system-mobile-applier
 │       ├── wcag-accessibility-checker   -> ../../skills/wcag-accessibility-checker
-│       └── ux-design                    -> ../../skills/ux-design
+│       ├── ux-design                    -> ../../skills/ux-design
+│       └── ux-redesign                  -> ../../skills/ux-redesign
 ├── .agent/
 │   └── skills/                          # Antigravity discovery (symlinks)
 │       ├── design-system-extractor      -> ../../skills/design-system-extractor
 │       ├── design-system-web-applier    -> ../../skills/design-system-web-applier
 │       ├── design-system-mobile-applier -> ../../skills/design-system-mobile-applier
 │       ├── wcag-accessibility-checker   -> ../../skills/wcag-accessibility-checker
-│       └── ux-design                    -> ../../skills/ux-design
+│       ├── ux-design                    -> ../../skills/ux-design
+│       └── ux-redesign                  -> ../../skills/ux-redesign
 ├── catalog.json                         # Antigravity skill catalog
 ├── skills/                              # Canonical skill definitions
 │   ├── design-system-extractor/
@@ -200,7 +205,10 @@ ui-design-skills/
 │   │   ├── SKILL.md
 │   │   ├── scripts/
 │   │   └── references/
-│   └── ux-design/
+│   ├── ux-design/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   └── ux-redesign/
 │       ├── SKILL.md
 │       └── references/
 ├── README.md
