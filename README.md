@@ -18,11 +18,11 @@ This repository provides three categories of agent skills:
 2. **Audit** using static analysis + axe-core runtime testing following WCAG-EM methodology
 3. **Review** the structured Markdown conformance report organized by WCAG level and POUR principles
 
-**UX Design Skills** — interactive PRD-to-UX-design workflow:
+**UX Design Skills** — PRD-to-UX-design workflow:
 
-1. **Provide** a Product Requirements Document (PRD) as input
-2. **Walk through** an 8-step guided process covering user flows, sitemaps, wireframes, and more
-3. **Review** the assembled UX_DESIGN.md with ASCII wireframes and structured design artifacts
+1. **Provide** a PRD (`docs/PRD.md`) and optional feature catalog (`docs/FEATURES.md`)
+2. **Analyze** through 6 forced designer mindset passes covering mental models, IA, affordances, cognitive load, states, and flow integrity
+3. **Review** the assembled `docs/UX_DESIGN.md` with UX foundations and ASCII wireframes
 
 All design skills share a common [token schema](#token-schema), so the extractor's output plugs directly into either applier.
 
@@ -46,7 +46,7 @@ All design skills share a common [token schema](#token-schema), so the extractor
 
 | Skill | Description |
 |-------|-------------|
-| **ux-design** | Interactive UX design documentation generator that transforms a PRD into a comprehensive UX_DESIGN.md through an 8-step guided process with ASCII wireframes, user flows, sitemaps, and content models. |
+| **ux-design** | UX design specification generator that transforms a PRD (`docs/PRD.md`) and optional feature catalog (`docs/FEATURES.md`) into `docs/UX_DESIGN.md` using 6 forced designer mindset passes — mental models, IA, affordances, cognitive load, state design, and flow integrity — followed by visual specifications with ASCII wireframes. |
 
 ## Installation
 

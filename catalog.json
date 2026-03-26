@@ -27,7 +27,7 @@
     {
       "name": "ux-design",
       "path": ".agent/skills/ux-design",
-      "description": "Interactive UX design documentation generator that transforms a PRD into a UX_DESIGN.md through an 8-step guided process"
+      "description": "UX design specification generator that transforms a PRD into a UX_DESIGN.md using a 6-pass forced designer mindset approach"
     }
   ]
 }
